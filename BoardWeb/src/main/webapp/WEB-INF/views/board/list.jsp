@@ -4,8 +4,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <jsp:include page="../includes/header.jsp"></jsp:include>
 
-        
-        
+    <p>result(addFlashAttribute): ${result }</p>
+    
+    
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Tables</h1>
@@ -39,7 +40,7 @@
                                 				<c:out value="${board.bno}"></c:out>
                                 			</td>
                                 			<td>
-                                				<a href="get?bno=${board.bno}"><c:out value="${board.title}"></c:out></a>
+                                				<a class="move" href="${board.bno}"><c:out value="${board.title}"></c:out></a>
                                 			</td>
                                 			<td>
                                 				<c:out value="${board.writer}"></c:out>
@@ -56,7 +57,59 @@
                                 </tbody>
                             </table>
                             <!-- /.table-responsive -->
-
+                            
+                            <!-- 검색조건.start -->
+                            <div class="row">
+                            	<div class="col-lg-12">
+                            		<form id="searchForm" action="/board/list" method="get">
+                            			<select name="type">
+                            				<option value="">---</option>
+                            				<option value="T" ${pageMaker.cri.type eq 'T' ? 'selected' : '' }>제목</option>
+                            				<option value="C" ${pageMaker.cri.type eq 'C' ? 'selected' : '' }>내용</option>
+                            				<option value="W" ${pageMaker.cri.type eq 'W' ? 'selected' : '' }>작성자</option>
+                            				<option value="TC" ${pageMaker.cri.type eq 'TC' ? 'selected' : '' }>제목 or 내용</option>
+                            				<option value="TW" ${pageMaker.cri.type eq 'TW' ? 'selected' : '' }>제목 or 작성자</option>
+                            				<option value="TCW" ${pageMaker.cri.type eq 'TCW' ? 'selected' : '' }>제목 or 내용 or 작성자</option>
+                            			</select>
+                            			<input type="text" name="keyword" value="${pageMaker.cri.keyword }">
+										<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+										<input type="hidden" name="amount" value="${pageMaker.cri.amount }">                            			                            			
+                            			<button type="submit" class="btn btn-default">Search</button>
+                            		</form>
+                            	</div>
+                            </div>
+                            <!-- 검색조건.end -->
+                            
+                            <!-- 페이징 시작부분.-->
+							<div class="pull-right">
+								<ul class='pagination'>
+									<c:if test="${pageMaker.prev }">
+										<li class="paginate_button previous">
+											<a href="${pageMaker.startPage-1 }">Previous</a>
+										</li>
+									</c:if>
+									
+									<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+										<li class="paginate_button ${pageMaker.cri.pageNum == num ? 'active': '' }">
+											<a href="${num }">${num }</a>
+										</li>
+									</c:forEach>
+									
+									<c:if test="${pageMaker.next }">
+										<li class="paginate_button next">
+											<a href="${pageMaker.endPage+1 }">Next</a>
+										</li>
+									</c:if>	
+																	
+								</ul>
+							</div>                            
+							<!-- 페이징 끝부분.-->
+							<form action="/board/list" method="get" id="actionForm">
+								<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+								<input type="hidden" name="amount" value="${pageMaker.cri.amount }">
+								<input type="hidden" name="type" value="${pageMaker.cri.type }">
+								<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }">
+							</form>
                             <!-- Modal -->
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -105,7 +158,44 @@
  			self.location = '/board/register' ;
  		})
  		
+	 	// 페이지 이동.
+	 	var actionForm = $('#actionForm');
+	 	$(".paginate_button a ").on('click', function (e) {
+	 		e.preventDefault();
+	 		actionForm.find('input[name="pageNum"]').val($(this).attr('href'));
+	 		actionForm.submit();
+	 	})
+	 	
+	 	// 상세페이지 이동.(pagaNum, amount, bno parameter 넘기기)
+	 	$('a.move').on('click', function(e) {
+	 		e.preventDefault();
+	 		var bno = $(this).attr('href');
+	 		actionForm.append('<input type="hidden" name="bno" value="'+ bno +'" >');
+	 		actionForm.attr('action', '/board/get');
+	 		actionForm.submit();
+	 	})
+	 	
+	 	
+	 	// 검색처리.
+	 	var searchForm = $('#searchForm');
+	 	$('#searchForm button').on('click', function(e) {
+	 		if(!searchForm.find('option:selected').val()) {
+	 			alert("검색종류를 선택하세요")
+	 			return flase;	// 기본 기눙 호출X   =  preventDefault()
+	 		}
+	 		if(!searchForm.find('input[name="keyword"]').val()) {
+	 			alert("검색어를 입력하세요")
+	 			return flase;
+	 		}
+	 		// 검색어를 검색 -> 첫 페이지.
+	 		searchForm.find("input[name='pageNum']").val('1');
+	 		searchForm.submit();
+	 	})
+	 	
+ 	
  	});
+ 	
+ 	
  </script>           
             
             

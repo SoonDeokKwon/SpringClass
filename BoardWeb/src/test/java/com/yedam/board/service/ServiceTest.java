@@ -7,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.yedam.board.domain.BoardVO;
+import com.yedam.board.domain.Criteria;
 import com.yedam.board.persistence.MapperTest;
 
 import lombok.Setter;
@@ -56,7 +57,11 @@ public class ServiceTest {
 	
 	@Test
 	public void getListTest() {
-		service.getList().forEach(board -> log.info(board));
+		Criteria cri = new Criteria(4,10);
+		cri.setType("TCW");
+		cri.setKeyword("user02");
+		//cri.setPageNum(2);
+		service.getList(cri).forEach(board -> log.info(board));
 	}
 	
 }
