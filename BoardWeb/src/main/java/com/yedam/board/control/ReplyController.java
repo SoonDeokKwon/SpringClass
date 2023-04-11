@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yedam.board.domain.Criteria;
+import com.yedam.board.domain.ReplyPageDTO;
 import com.yedam.board.domain.ReplyVO;
 import com.yedam.board.service.ReplyService;
 
@@ -47,8 +48,10 @@ public class ReplyController {
 	public ResponseEntity getList(@PathVariable("bno") Long bno, @PathVariable("page") int page) {
 		// pageNum = 3(페이지 넘버), amount=10(한 페이지당 건수)
 		Criteria cri = new Criteria(page, 10);
-		List<ReplyVO> list = replyService.getList(bno, cri);
-		return new ResponseEntity<>(list, HttpStatus.OK);
+//		List<ReplyVO> list = replyService.getList(bno, cri);
+		ReplyPageDTO dto = replyService.getListPage(bno, cri);
+				
+		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 	
 	
