@@ -9,7 +9,7 @@
     header h2 {
         text-align: center;
         background-color: rgb(210, 210, 210);
-        height: 50px;
+        height: 80px;
         margin: 0;
     }
     header li {
@@ -29,6 +29,7 @@
 
     #container {
         padding: 20px;
+        margin: 20px 0;
     }
 
     #container .body_title {
@@ -40,9 +41,41 @@
         font-weight: 700;
     }
     footer {
+    	height: 50px;
+    	padding: 20px;
         background-color: rgb(210, 210, 210);
         color: white;
         text-align: center;
+    }
+    .register_form {
+        width: 600px;
+        margin: 0 auto;
+        border: 1px solid rgb(177, 175, 175);
+        padding: 20px;
+    }
+    .register_form p {
+        text-align: center;
+    }
+    .register_form ul {
+        list-style-type: none;
+    }
+
+    .register_form label {
+    	width: 150px;
+    	display: inline-block;
+
+    }
+    .register_form input {
+    	width: 350px;
+     	margin-bottom: 20px;
+     	height: 30px;   	
+    }
+     .register_form textarea {
+    	width: 350px; 
+    	height: 60px;	
+    }
+    .btn_reg {
+    	text-align: center;
     }
 </style>
 

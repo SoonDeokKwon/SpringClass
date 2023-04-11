@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class BookVO {
-	private int bookNo;
+	private Long bookNo;
 	private String bookName;
 	private String bookCoverimg; 
 	private Date bookDate; 

@@ -5,13 +5,19 @@
   
 <mapper namespace="com.yedam.persistence.BookMapper">
 
+	<select id="getList" resultType="com.yedam.domain.BookVO">
+		select /*+ INDEX_DESC(book_tbl_06 pk_book)*/ * from book_tbl_06
+	</select>
+
+
 	<insert id="insert" parameterType="com.yedam.domain.BookVO">
+		<selectKey keyProperty="bookNo" order="BEFORE" resultType="long">
+			select seq_book.nextval from dual
+		</selectKey>	
 		insert into book_tbl_06 
-		values ((
-        		select max(#{bookNo}) from book_tbl_06 ) + 1,
-        		#{bookName} , #{bookCoverimg} , #{bookDate} , #{bookPrice} , #{bookPublisher} , #{bookInfo} 
-        		)
+		values (#{bookNo}, #{bookName} , #{bookCoverimg} , #{bookDate} , #{bookPrice} , #{bookPublisher} , #{bookInfo} )
 	</insert>
 	
+
 
 </mapper>
