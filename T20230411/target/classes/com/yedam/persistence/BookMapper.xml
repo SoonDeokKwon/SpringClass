@@ -6,7 +6,9 @@
 <mapper namespace="com.yedam.persistence.BookMapper">
 
 	<select id="getList" resultType="com.yedam.domain.BookVO">
-		select /*+ INDEX_DESC(book_tbl_06 pk_book)*/ * from book_tbl_06
+		select /*+ INDEX_DESC(book_tbl_06 pk_book)*/ 
+		book_no as bookNo, book_name as bookName, book_coverimg as bookCoverimg, book_date as bookDate, book_price as bookPrice , book_publisher as bookPublisher , book_info as bookInfo 
+		from book_tbl_06
 	</select>
 
 
@@ -18,6 +20,14 @@
 		values (#{bookNo}, #{bookName} , #{bookCoverimg} , #{bookDate} , #{bookPrice} , #{bookPublisher} , #{bookInfo} )
 	</insert>
 	
+	<select id="selectBno" resultType="int">
+		select max(book_no) from book_tbl_06
+	</select>
+	
+	<select id="rentList" resultType="com.yedam.domain.RentVO">
+		select * from rent_tbl_06
+		order by rent_no desc
+	</select>
 
 
 </mapper>

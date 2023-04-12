@@ -99,7 +99,7 @@
     </header>
     <div id="container">
         <div class="body_title">
-            <p>도서 조회/수정</p>
+            <p>도서별 대여 매출 현황</p>
         </div>
 
         <div class="list">
@@ -108,37 +108,25 @@
                     <tr>
                        <th>도서번호</th>
                         <th>도서명</th>
-                        <th>표지</th>
-                        <th>출판일자</th>
-                        <th>금액</th>
-                        <th>출판사</th>	
-                        <th>도서소개</th>										
+                        <th>대여총계</th>
+                        <th>대여횟수</th>									
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="book" items="${list }">
+                    <c:forEach var="rent" items="${list }">
                         <tr>
                             <td>
-                                <c:out value="${book.bookNo}"></c:out>
+                                <c:out value="${rent.rentNo}"></c:out>
                             </td>
                             <td>
-                                <c:out value="${book.bookName}"></c:out>
+                                <c:out value="${rent.bookNo}"></c:out>
                             </td>
                             <td>
-                                <c:out value="${book.bookCoverimg}"></c:out>
+                                <c:out value="${rent.rentPrice}"></c:out>
                             </td>
                             <td>
-                            	<fmt:formatDate pattern="yyyy/MM/dd" value="${book.bookDate}"/>
-                            </td>
-                            <td>
-                                <c:out value="${book.bookPrice}"></c:out>
-                            </td>
-                            <td>
-                                <c:out value="${book.bookPublisher}"></c:out>
-                            </td>
-                            <td>
-                            	<c:out value="${book.bookInfo}"></c:out>
-                        	</td>											
+                            	<c:out value="${rent.rentStatus}"></c:out>
+                            </td>										
                         	</tr>
                     </c:forEach>                   
                 </tbody>

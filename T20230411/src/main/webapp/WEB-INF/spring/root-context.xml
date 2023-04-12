@@ -26,6 +26,11 @@
 	<!-- mybatis: SqlSession <- SqlSessionFactory에서 가져옴. -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
+		<property name="configuration">
+		<bean class="org.apache.ibatis.session.Configuration">
+		<property name="mapUnderscoreToCamelCase" value="true"></property>
+		</bean>
+		</property>
 	</bean>
 	
 	<mybatis-spring:scan base-package="com.yedam.persistence"/>

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,6 +79,9 @@
     .btn_reg {
     	text-align: center;
     }
+    a {
+    	color:white;
+    }
 </style>
 
 </head>
@@ -85,10 +90,10 @@
         <h2>도서대여관리</h2>
         <nav>
             <ul>
-                <li>도서등록</li>
-                <li>도서목록조회/수정</li>
-                <li>대여현황조회</li>
-                <li>홈으로</li>
+                <li><a href="/book/register">도서등록</a></li>
+                <li><a href="/book/list">도서목록조회/수정</a></li>
+                <li><a href="/book/rent">대여현황조회</a></li>
+                <li><a href="/book/index">홈으로</a></li>
             </ul>
         </nav>
     </header>

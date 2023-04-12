@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,6 +79,9 @@
     .btn_reg {
     	text-align: center;
     }
+    a {
+    	color:white;
+    }
 </style>
 
 </head>
@@ -85,10 +90,10 @@
         <h2>도서대여관리</h2>
         <nav>
             <ul>
-                <li>도서등록</li>
-                <li>도서목록조회/수정</li>
-                <li>대여현황조회</li>
-                <li>홈으로</li>
+                <li><a href="/book/register">도서등록</a></li>
+                <li><a href="/book/list">도서목록조회/수정</a></li>
+                <li><a href="/book/rent">대여현황조회</a></li>
+                <li><a href="/book/index">홈으로</a></li>
             </ul>
         </nav>
     </header>
@@ -102,7 +107,7 @@
                 <ul>
                     <li>
                         <label>도서번호</label>
-                        <input type="text" id="bookNo" name="bookNo" value="">
+                        <input type="text" id="bookNo" name="bookNo" value="${bno}" readonly>
                     </li>
                     <li>
                         <label>도서명</label>
@@ -114,7 +119,7 @@
                     </li>
                     <li>
                         <label>출판일자</label>
-                        <input type="text" id="bookDate" name="bookDate">
+                        <input type="date" id="bookDate" name="bookDate">
                     </li>
                     <li>
                         <label>금액</label>
@@ -130,7 +135,7 @@
                     </li>
                 </ul>
                 <div class="btn_reg">
-	                <button type="submit">등록</button>
+	                <button type="submit" class="submit_btn">등록</button>
 	                <button>조회</button>
                 </div>
 			</form>
@@ -144,7 +149,39 @@
 	
 	<script>
 		
-
+	$(document).ready(function () {
+		
+		$('.submit_btn').on('click', function (e) {
+			e.preventDefault();
+			var inputBN = $('input[name="bookName"]').val();
+			console.log(inputBN);
+			if(inputBN == null) {
+				alert("도서명이 입력되지 않았습니다.");
+				$('input[name="bookName"]').focus();
+				
+			} else {
+				
+				// ajax 호출.
+				$.ajax({
+					url:'',
+					processDate: false,
+					contentType: false,
+					type: 'post',
+					data: formData,
+					success: function (result) {
+						alert("도서 등록이 완료되었습니다.");
+						console.log(result);
+						
+					},
+					error: function (reject) {
+						alert('Error');
+						console.error(reject);
+					}
+				})
+			}
+			
+		})
+	})
 	
 	
 	</script>

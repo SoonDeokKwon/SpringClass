@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.yedam.domain.BookVO;
+import com.yedam.domain.RentVO;
 import com.yedam.persistence.BookMapper;
 import com.yedam.service.BookService;
 
@@ -28,7 +29,7 @@ public class BookController {
 	@Setter(onMethod_ = @Autowired)
 	private BookService bookService;
 	
-	@GetMapping("/")
+	@GetMapping("index")
 	public String main() {
 		return "index";
 	}
@@ -44,8 +45,10 @@ public class BookController {
 	
 	
 	@GetMapping("register")
-	public void register() {
+	public void register(Model model) {
 		// 등록화면.
+		int bno = bookService.selectBno() + 1;
+		model.addAttribute("bno", bno);
 	}
 	
 	@RequestMapping(value="register", method=RequestMethod.POST)
@@ -57,6 +60,15 @@ public class BookController {
 		model.addFlashAttribute("result", book.getBookNo());
 		
 		return "redirect:/book/list";
+	}
+	
+	
+	@RequestMapping("rent")
+	public void rentList(Model model) {
+		log.info("컨트롤...대여 목록");
+		List<RentVO> list = bookService.rentList();
+		model.addAttribute("list", list);
+		log.info(list);
 	}
 	
 	
